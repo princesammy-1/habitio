@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { checkBadges, getAllBadges } from '../utils/badges';
+import { checkBadges, checkGlobalBadges, getAllBadges } from '../utils/badges';
 
 export default function BadgeDisplay({ habits }) {
   const [collapsed, setCollapsed] = useState(true);
@@ -8,6 +8,7 @@ export default function BadgeDisplay({ habits }) {
   habits.filter(h => !h.archived).forEach(h => {
     checkBadges(h).forEach(b => allEarned.add(b.id));
   });
+  checkGlobalBadges(habits).forEach(b => allEarned.add(b.id));
 
   const allBadges = getAllBadges();
   const earnedList = allBadges.filter(b => allEarned.has(b.id));
