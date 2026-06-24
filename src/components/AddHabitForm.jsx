@@ -1,14 +1,15 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from "react";
+import { FiPlus, FiCheck, FiX } from "react-icons/fi";
 
-const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 export default function AddHabitForm({ onAdd }) {
   const [expanded, setExpanded] = useState(false);
-  const [name, setName] = useState('');
-  const [cadence, setCadence] = useState('daily');
+  const [name, setName] = useState("");
+  const [cadence, setCadence] = useState("daily");
   const [timesPerWeek, setTimesPerWeek] = useState(3);
   const [customDays, setCustomDays] = useState([]);
-  const [timeOfDay, setTimeOfDay] = useState('any');
+  const [timeOfDay, setTimeOfDay] = useState("any");
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -21,19 +22,19 @@ export default function AddHabitForm({ onAdd }) {
     if (!trimmed) return;
 
     let cadenceObj = { type: cadence };
-    if (cadence === 'weekly') cadenceObj.timesPerWeek = timesPerWeek;
-    if (cadence === 'custom') cadenceObj.daysOfWeek = customDays;
+    if (cadence === "weekly") cadenceObj.timesPerWeek = timesPerWeek;
+    if (cadence === "custom") cadenceObj.daysOfWeek = customDays;
 
     onAdd(trimmed, cadenceObj, timeOfDay);
-    setName('');
+    setName("");
     setExpanded(false);
-    setCadence('daily');
+    setCadence("daily");
     setCustomDays([]);
   }
 
   function toggleCustomDay(d) {
-    setCustomDays(prev =>
-      prev.includes(d) ? prev.filter(x => x !== d) : [...prev, d]
+    setCustomDays((prev) =>
+      prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d],
     );
   }
 
@@ -41,7 +42,7 @@ export default function AddHabitForm({ onAdd }) {
     <div className="add-habit-wrap">
       {!expanded ? (
         <button className="add-trigger" onClick={() => setExpanded(true)}>
-          + New Habit
+          <FiPlus /> New Habit
         </button>
       ) : (
         <form className="add-form" onSubmit={handleSubmit}>
@@ -50,38 +51,45 @@ export default function AddHabitForm({ onAdd }) {
             type="text"
             placeholder="What habit do you want to build?"
             value={name}
-            onChange={e => setName(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
             autoComplete="off"
           />
 
           <div className="form-group">
             <label>Schedule</label>
             <div className="cadence-options">
-              {['daily', 'weekdays', 'weekends', 'weekly', 'custom'].map(t => (
-                <button
-                  key={t}
-                  type="button"
-                  className={`pill ${cadence === t ? 'active' : ''}`}
-                  onClick={() => setCadence(t)}
-                >
-                  {t === 'daily' ? 'Daily' :
-                   t === 'weekdays' ? 'Weekdays' :
-                   t === 'weekends' ? 'Weekends' :
-                   t === 'weekly' ? 'X/Week' : 'Custom'}
-                </button>
-              ))}
+              {["daily", "weekdays", "weekends", "weekly", "custom"].map(
+                (t) => (
+                  <button
+                    key={t}
+                    type="button"
+                    className={`pill ${cadence === t ? "active" : ""}`}
+                    onClick={() => setCadence(t)}
+                  >
+                    {t === "daily"
+                      ? "Daily"
+                      : t === "weekdays"
+                        ? "Weekdays"
+                        : t === "weekends"
+                          ? "Weekends"
+                          : t === "weekly"
+                            ? "X/Week"
+                            : "Custom"}
+                  </button>
+                ),
+              )}
             </div>
           </div>
 
-          {cadence === 'weekly' && (
+          {cadence === "weekly" && (
             <div className="form-group">
               <label>Times per week</label>
               <div className="cadence-options">
-                {[1,2,3,4,5,6].map(n => (
+                {[1, 2, 3, 4, 5, 6].map((n) => (
                   <button
                     key={n}
                     type="button"
-                    className={`pill ${timesPerWeek === n ? 'active' : ''}`}
+                    className={`pill ${timesPerWeek === n ? "active" : ""}`}
                     onClick={() => setTimesPerWeek(n)}
                   >
                     {n}x
@@ -91,7 +99,7 @@ export default function AddHabitForm({ onAdd }) {
             </div>
           )}
 
-          {cadence === 'custom' && (
+          {cadence === "custom" && (
             <div className="form-group">
               <label>Days of week</label>
               <div className="cadence-options">
@@ -99,7 +107,7 @@ export default function AddHabitForm({ onAdd }) {
                   <button
                     key={d}
                     type="button"
-                    className={`pill ${customDays.includes(i) ? 'active' : ''}`}
+                    className={`pill ${customDays.includes(i) ? "active" : ""}`}
                     onClick={() => toggleCustomDay(i)}
                   >
                     {d}
@@ -113,15 +121,15 @@ export default function AddHabitForm({ onAdd }) {
             <label>Time of day</label>
             <div className="cadence-options">
               {[
-                { value: 'any', label: 'Any' },
-                { value: 'morning', label: 'Morning' },
-                { value: 'afternoon', label: 'Afternoon' },
-                { value: 'evening', label: 'Evening' },
-              ].map(t => (
+                { value: "any", label: "Any" },
+                { value: "morning", label: "Morning" },
+                { value: "afternoon", label: "Afternoon" },
+                { value: "evening", label: "Evening" },
+              ].map((t) => (
                 <button
                   key={t.value}
                   type="button"
-                  className={`pill ${timeOfDay === t.value ? 'active' : ''}`}
+                  className={`pill ${timeOfDay === t.value ? "active" : ""}`}
                   onClick={() => setTimeOfDay(t.value)}
                 >
                   {t.label}
@@ -131,8 +139,16 @@ export default function AddHabitForm({ onAdd }) {
           </div>
 
           <div className="form-actions">
-            <button type="submit" className="btn-primary">Add Habit</button>
-            <button type="button" className="btn-ghost" onClick={() => setExpanded(false)}>Cancel</button>
+            <button type="submit" className="btn-primary">
+              <FiCheck /> Add Habit
+            </button>
+            <button
+              type="button"
+              className="btn-ghost"
+              onClick={() => setExpanded(false)}
+            >
+              <FiX /> Cancel
+            </button>
           </div>
         </form>
       )}
