@@ -1,20 +1,30 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from "react";
+import { FiOctagon, FiArchive, FiTrash2, FiZap } from "react-icons/fi";
 import {
-  today, calcCurrentStreak, calcLongestStreak, calcRollingConsistency,
-  canUseSkipToken, getTodayStatus, getCadenceLabel,
-} from '../utils/helpers';
+  calcCurrentStreak,
+  calcLongestStreak,
+  calcRollingConsistency,
+  canUseSkipToken,
+  getTodayStatus,
+  getCadenceLabel,
+} from "../utils/helpers";
 
-export default function HabitItem({ habit, onToggle, onSkip, onDelete, onArchive }) {
+export default function HabitItem({
+  habit,
+  onToggle,
+  onSkip,
+  onDelete,
+  onArchive,
+}) {
   const [swiping, setSwiping] = useState(false);
   const [swipeX, setSwipeX] = useState(0);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const itemRef = useRef(null);
   const startX = useRef(0);
 
-  const todayStr = today();
   const status = getTodayStatus(habit);
-  const isDone = status === 'done';
-  const isSkipped = status === 'skip';
+  const isDone = status === "done";
+  const isSkipped = status === "skip";
   const streak = calcCurrentStreak(habit);
   const longestStreak = calcLongestStreak(habit);
   const consistency = calcRollingConsistency(habit);
@@ -26,11 +36,14 @@ export default function HabitItem({ habit, onToggle, onSkip, onDelete, onArchive
     setSwiping(true);
   }, []);
 
-  const handleTouchMove = useCallback((e) => {
-    if (!swiping) return;
-    const dx = e.touches[0].clientX - startX.current;
-    setSwipeX(Math.max(-80, Math.min(80, dx)));
-  }, [swiping]);
+  const handleTouchMove = useCallback(
+    (e) => {
+      if (!swiping) return;
+      const dx = e.touches[0].clientX - startX.current;
+      setSwipeX(Math.max(-80, Math.min(80, dx)));
+    },
+    [swiping],
+  );
 
   const handleTouchEnd = useCallback(() => {
     setSwiping(false);
@@ -44,27 +57,43 @@ export default function HabitItem({ habit, onToggle, onSkip, onDelete, onArchive
     setSwipeX(0);
   }, [swipeX, onToggle, onSkip, skipTokensLeft, isDone, isSkipped]);
 
-  const flameIcons = ['🔥', '🔥', '🔥🔥', '🔥🔥', '🔥🔥🔥'];
-  const flameLevel = streak >= 100 ? 4 : streak >= 50 ? 3 : streak >= 21 ? 2 : streak >= 7 ? 1 : 0;
-  const flame = flameIcons[flameLevel] || '🌱';
+  const flameLevel =
+    streak >= 100
+      ? 4
+      : streak >= 50
+        ? 3
+        : streak >= 21
+          ? 2
+          : streak >= 7
+            ? 1
+            : 0;
+  const flame = flameLevel > 0 ? <FiZap /> : null;
 
   return (
     <div
       ref={itemRef}
-      className={`habit ${isDone ? 'done' : ''} ${isSkipped ? 'skipped' : ''} ${confirmDelete ? 'deleting' : ''}`}
-      style={swiping ? { transform: `translateX(${swipeX}px)`, transition: 'none' } : { transform: 'translateX(0)' }}
+      className={`habit ${isDone ? "done" : ""} ${isSkipped ? "skipped" : ""} ${confirmDelete ? "deleting" : ""}`}
+      style={
+        swiping
+          ? { transform: `translateX(${swipeX}px)`, transition: "none" }
+          : { transform: "translateX(0)" }
+      }
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
       <div className="habit-left">
         <button
-          className={`check ${isDone ? 'checked' : ''} ${isSkipped ? 'skipped' : ''}`}
-          onClick={() => { if (!isSkipped) onToggle(); }}
+          className={`check ${isDone ? "checked" : ""} ${isSkipped ? "skipped" : ""}`}
+          onClick={() => {
+            if (!isSkipped) onToggle();
+          }}
           aria-label="Toggle habit"
         >
           {isDone ? (
-            <svg viewBox="0 0 14 14"><polyline points="2 7 5.5 10.5 12 3.5" /></svg>
+            <svg viewBox="0 0 14 14">
+              <polyline points="2 7 5.5 10.5 12 3.5" />
+            </svg>
           ) : isSkipped ? (
             <span className="skip-mark">−</span>
           ) : null}
@@ -76,25 +105,39 @@ export default function HabitItem({ habit, onToggle, onSkip, onDelete, onArchive
           <span className="name">{habit.name}</span>
           <div className="habit-actions">
             {!isDone && !isSkipped && skipTokensLeft > 0 && (
-              <button className="action-btn skip-btn" onClick={onSkip} title="Use skip token">
-                🛑
+              <button
+                className="action-btn skip-btn"
+                onClick={onSkip}
+                title="Use skip token"
+              >
+                <FiOctagon />
               </button>
             )}
             {!habit.archived && (
-              <button className="action-btn archive-btn" onClick={onArchive} title="Archive habit">
-                📦
+              <button
+                className="action-btn archive-btn"
+                onClick={onArchive}
+                title="Archive habit"
+              >
+                <FiArchive />
               </button>
             )}
-            <button className="action-btn delete-btn" onClick={() => setConfirmDelete(!confirmDelete)} title="Delete habit">
-              🗑️
+            <button
+              className="action-btn delete-btn"
+              onClick={() => setConfirmDelete(!confirmDelete)}
+              title="Delete habit"
+            >
+              <FiTrash2 />
             </button>
           </div>
         </div>
 
         <div className="habit-meta">
           <span className="cadence-badge">{cadenceLabel}</span>
-          {habit.timeOfDay && habit.timeOfDay !== 'any' && (
-            <span className={`tod-badge ${habit.timeOfDay}`}>{habit.timeOfDay}</span>
+          {habit.timeOfDay && habit.timeOfDay !== "any" && (
+            <span className={`tod-badge ${habit.timeOfDay}`}>
+              {habit.timeOfDay}
+            </span>
           )}
         </div>
 
@@ -113,20 +156,32 @@ export default function HabitItem({ habit, onToggle, onSkip, onDelete, onArchive
           <div className="streak-bar">
             <div
               className="streak-fill"
-              style={{ width: `${Math.min(100, (streak / Math.max(1, longestStreak)) * 100)}%` }}
+              style={{
+                width: `${Math.min(100, (streak / Math.max(1, longestStreak)) * 100)}%`,
+              }}
             />
           </div>
         </div>
       </div>
 
       {confirmDelete && (
-        <div className="confirm-overlay" onClick={() => setConfirmDelete(false)}>
-          <div className="confirm-dialog" onClick={e => e.stopPropagation()}>
+        <div
+          className="confirm-overlay"
+          onClick={() => setConfirmDelete(false)}
+        >
+          <div className="confirm-dialog" onClick={(e) => e.stopPropagation()}>
             <p>Delete this habit?</p>
             <p className="confirm-hint">Progress will be lost forever.</p>
             <div className="confirm-actions">
-              <button className="btn-danger" onClick={onDelete}>Delete</button>
-              <button className="btn-ghost" onClick={() => setConfirmDelete(false)}>Cancel</button>
+              <button className="btn-danger" onClick={onDelete}>
+                Delete
+              </button>
+              <button
+                className="btn-ghost"
+                onClick={() => setConfirmDelete(false)}
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>
