@@ -2,6 +2,21 @@ import { useState } from "react";
 import { FiRefreshCw } from "react-icons/fi";
 import { calcCurrentStreak, calcRollingConsistency } from "../utils/helpers";
 
+function currentTimeSlot() {
+  const h = new Date().getHours();
+  if (h >= 5 && h < 12) return "morning";
+  if (h >= 12 && h < 17) return "afternoon";
+  if (h >= 17 && h < 22) return "evening";
+  return "any";
+}
+
+const TIME_OPTIONS = [
+  { value: "any", label: "Any" },
+  { value: "morning", label: "Morning" },
+  { value: "afternoon", label: "Afternoon" },
+  { value: "evening", label: "Evening" },
+];
+
 const MESSAGES = [
   {
     text: "Discipline is choosing between what you want now and what you want most.",
@@ -32,6 +47,7 @@ const MESSAGES = [
     text: "Motivation gets you started. Habit keeps you going.",
     author: "Jim Ryun",
     tags: ["habit", "motivation"],
+    time: "morning",
   },
   {
     text: "We are what we repeatedly do. Excellence, then, is not an act, but a habit.",
@@ -42,6 +58,7 @@ const MESSAGES = [
     text: "The secret of getting ahead is getting started.",
     author: "Mark Twain",
     tags: ["motivation", "start"],
+    time: "morning",
   },
   {
     text: "Don't break the chain.",
@@ -57,11 +74,13 @@ const MESSAGES = [
     text: "A year from now you'll wish you started today.",
     author: "Karen Lamb",
     tags: ["motivation", "start"],
+    time: "morning",
   },
   {
     text: "The best time to plant a tree was 20 years ago. The second best time is now.",
     author: "Chinese Proverb",
     tags: ["motivation", "start"],
+    time: "morning",
   },
   {
     text: "Your habits shape your future. Choose them wisely.",
@@ -72,6 +91,7 @@ const MESSAGES = [
     text: "Push yourself because no one else is going to do it for you.",
     author: "Unknown",
     tags: ["motivation", "discipline"],
+    time: "morning",
   },
   {
     text: "Strive for progress, not perfection.",
@@ -82,6 +102,7 @@ const MESSAGES = [
     text: "The only bad workout is the one that didn't happen.",
     author: "Unknown",
     tags: ["discipline", "action"],
+    time: "morning",
   },
   {
     text: "Discipline is doing what needs to be done, even when you don't want to do it.",
@@ -97,16 +118,19 @@ const MESSAGES = [
     text: "Every day you show up, you're building the person you want to become.",
     author: "Unknown",
     tags: ["progress", "habit"],
+    time: "morning",
   },
   {
     text: "The chains of habit are too weak to be felt until they are too strong to be broken.",
     author: "Samuel Johnson",
     tags: ["habit", "discipline"],
+    time: "evening",
   },
   {
     text: "Success doesn't come from what you do occasionally. It comes from what you do consistently.",
     author: "Marie Forleo",
     tags: ["consistency", "success"],
+    time: "afternoon",
   },
   {
     text: "Be the designer of your world and not merely the consumer of it.",
@@ -117,21 +141,25 @@ const MESSAGES = [
     text: "Every action you take is a vote for the type of person you wish to become.",
     author: "James Clear",
     tags: ["habit", "identity"],
+    time: "morning",
   },
   {
     text: "The most powerful thing you can do is show up every day.",
     author: "Unknown",
     tags: ["consistency", "discipline"],
+    time: "morning",
   },
   {
     text: "Don't let what you cannot do interfere with what you can do.",
     author: "John Wooden",
     tags: ["motivation", "discipline"],
+    time: "afternoon",
   },
   {
     text: "It never gets easier. You just get stronger.",
     author: "Unknown",
     tags: ["motivation", "discipline"],
+    time: "afternoon",
   },
   {
     text: "The difference between who you are and who you want to be is what you do.",
@@ -142,21 +170,66 @@ const MESSAGES = [
     text: "Your habits are the compound interest of self-improvement.",
     author: "James Clear",
     tags: ["habit", "progress"],
+    time: "afternoon",
   },
   {
     text: "Fall seven times, stand up eight.",
     author: "Japanese Proverb",
     tags: ["resilience", "motivation"],
+    time: "evening",
   },
   {
     text: "The only person you should try to be better than is the person you were yesterday.",
     author: "Unknown",
     tags: ["progress", "motivation"],
+    time: "evening",
+  },
+  {
+    text: "Morning wins build momentum for the rest of your day.",
+    author: "Unknown",
+    tags: ["morning", "momentum"],
+    time: "morning",
+  },
+  {
+    text: "The afternoon is where discipline meets distraction. Stay the course.",
+    author: "Unknown",
+    tags: ["afternoon", "discipline"],
+    time: "afternoon",
+  },
+  {
+    text: "Evenings are for reflecting on what you built today.",
+    author: "Unknown",
+    tags: ["evening", "reflection"],
+    time: "evening",
+  },
+  {
+    text: "Win the morning, win the day.",
+    author: "Unknown",
+    tags: ["morning", "discipline"],
+    time: "morning",
+  },
+  {
+    text: "The midday slump is just your comfort zone asking you to quit.",
+    author: "Unknown",
+    tags: ["afternoon", "persistence"],
+    time: "afternoon",
+  },
+  {
+    text: "Rest tonight so you can rise tomorrow.",
+    author: "Unknown",
+    tags: ["evening", "rest"],
+    time: "evening",
   },
 ];
 
-function pickMessage(habits) {
+function pickMessage(habits, timeFilter) {
   let filtered = MESSAGES;
+
+  if (timeFilter && timeFilter !== "any") {
+    filtered = filtered.filter(
+      (m) => !m.time || m.time === timeFilter,
+    );
+  }
 
   const bestStreak = habits
     .filter((h) => !h.archived)
@@ -210,11 +283,18 @@ function pickMessage(habits) {
 }
 
 export default function MotivationDisplay({ habits }) {
-  const [msg, setMsg] = useState(() => pickMessage(habits));
+  const [timeFilter, setTimeFilter] = useState(() => currentTimeSlot());
+  const [msg, setMsg] = useState(() => pickMessage(habits, timeFilter));
   const [fadeKey, setFadeKey] = useState(0);
 
+  function selectTime(slot) {
+    setTimeFilter(slot);
+    setMsg(pickMessage(habits, slot));
+    setFadeKey((k) => k + 1);
+  }
+
   function handleRefresh() {
-    setMsg(pickMessage(habits));
+    setMsg(pickMessage(habits, timeFilter));
     setFadeKey((k) => k + 1);
   }
 
@@ -231,6 +311,17 @@ export default function MotivationDisplay({ habits }) {
           <FiRefreshCw />
         </button>
       </blockquote>
+      <div className="motivation-times">
+        {TIME_OPTIONS.map((opt) => (
+          <button
+            key={opt.value}
+            className={`motivation-time-pill ${timeFilter === opt.value ? "active" : ""}`}
+            onClick={() => selectTime(opt.value)}
+          >
+            {opt.label}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }

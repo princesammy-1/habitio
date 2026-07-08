@@ -489,6 +489,32 @@ header h1 { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); }
   background: var(--bg-surface-hover);
 }
 
+.motivation-times {
+  display: flex;
+  gap: 3px;
+  margin-top: 0.4rem;
+}
+.motivation-time-pill {
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.6rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.3px;
+}
+.motivation-time-pill:hover {
+  border-color: var(--border-hover);
+  color: var(--text-secondary);
+}
+.motivation-time-pill.active {
+  border-color: var(--accent);
+  background: var(--bg-accent);
+  color: var(--text-accent);
+}
+
 /* ===== Analytics ===== */
 .analytics-wrap { margin-top: 1.5rem; }
 .analytics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.5rem; }
@@ -590,6 +616,7 @@ header h1 { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); }
 @media (max-width: 640px) {
   .motivation-bar { padding: 0.5rem 0.75rem; }
   .motivation-bar .motivation-text { font-size: 0.8rem; gap: 0.35rem; }
+  .motivation-time-pill { font-size: 0.55rem; padding: 0.15rem 0.4rem; }
 }
 
 /* Small mobile */
