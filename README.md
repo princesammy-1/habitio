@@ -19,11 +19,14 @@ A consistency tracker that helps you build habits by measuring momentum, not jus
 - **Archive vs Delete** — archive preserves history; delete is permanent with confirmation
 - **Theme Toggle** — dark and light mode with CSS custom properties
 
+### Motivation
+- **Daily Quote Bar** — contextual messages that adapt to your progress (streak, consistency). Fresh quote each visit with one-click refresh.
+
 ### Analytics & Visuals
 - **GitHub-Style Contribution Grid** — 365-day heat map (collapsible)
 - **Weekly Overview** — 7-day grid showing daily completion status
 - **Time-of-Day Patterns** — per-slot completion rates showing when you're most consistent
-- **Milestone Badges** — 10 earnable badges (7-day streak, 100 total completions, 95% consistency, etc.)
+- **Milestone Badges** — 30+ earnable badges (streak milestones, consistency tiers, total completions, and special achievements)
 
 ### User System
 - **Login / Signup** — email-based auth with session persistence (localStorage demo — swap in Firebase/Supabase easily)
@@ -67,6 +70,7 @@ src/
 │   ├── HabitItem.jsx          — single habit row (toggle, skip, swipe, streak)
 │   ├── HabitList.jsx          — filtered habit list
 │   ├── Header.jsx             — title, theme toggle, user menu
+│   ├── MotivationDisplay.jsx  — daily quote bar (context-aware)
 │   ├── StatsBar.jsx           — aggregate stats
 │   ├── ThemeToggle.jsx        — dark/light mode switch
 │   ├── TimeAnalytics.jsx      — time-of-day performance breakdown

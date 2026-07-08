@@ -22,7 +22,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     try {
       const raw = localStorage.getItem(SESSION_KEY);
-      if (raw) setUser(JSON.parse(raw));
+      if (raw) setUser(JSON.parse(raw)); // eslint-disable-line react-hooks/set-state-in-effect
     } catch {}
     setLoading(false);
   }, []);
@@ -93,6 +93,7 @@ export function AuthProvider({ children }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useAuth() {
   const ctx = useContext(AuthContext);
   if (!ctx) throw new Error('useAuth must be used within AuthProvider');

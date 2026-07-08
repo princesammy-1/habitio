@@ -140,9 +140,10 @@ export function getCadenceLabel(cadence) {
     case 'weekdays': return 'Weekdays';
     case 'weekends': return 'Weekends';
     case 'weekly': return `${cadence.timesPerWeek}x / week`;
-    case 'custom':
+    case 'custom': {
       const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
       return (cadence.daysOfWeek || []).map(d => days[d]).join(', ');
+    }
     default: return 'Daily';
   }
 }

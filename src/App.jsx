@@ -11,6 +11,7 @@ import HabitList from './components/HabitList';
 import WeekView from './components/WeekView';
 import ContributionGrid from './components/ContributionGrid';
 import BadgeDisplay from './components/BadgeDisplay';
+import MotivationDisplay from './components/MotivationDisplay';
 import TimeAnalytics from './components/TimeAnalytics';
 import './App.css';
 
@@ -92,6 +93,7 @@ function AppContent() {
   return (
     <div className="container">
       <Header />
+      <MotivationDisplay habits={visibleHabits} />
       <AddHabitForm onAdd={addHabit} />
       <TimeFilter value={filter} onChange={setFilter} />
       <StatsBar habits={visibleHabits} />

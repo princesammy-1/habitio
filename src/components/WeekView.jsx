@@ -1,4 +1,4 @@
-import { pastDays, dayOfWeek, today } from '../utils/helpers';
+import { pastDays, dayOfWeek, today, isExpectedDay } from '../utils/helpers';
 
 export default function WeekView({ habits }) {
   const days = pastDays(7);
@@ -11,8 +11,10 @@ export default function WeekView({ habits }) {
           let doneCount = 0;
           let totalCount = 0;
           habits.filter(h => !h.archived).forEach(h => {
-            totalCount++;
-            if (h.logs?.[dayStr] === 'done') doneCount++;
+            if (isExpectedDay(h.cadence, dayStr)) {
+              totalCount++;
+              if (h.logs?.[dayStr] === 'done') doneCount++;
+            }
           });
 
           let cls = 'week-cell';

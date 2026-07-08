@@ -1,8 +1,8 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { FiX } from "react-icons/fi";
 import { useAuth } from "../context/AuthContext";
 
-export default function AuthModal({ isOpen, onClose }) {
+export default function AuthModal({ onClose }) {
   const { login, signup } = useAuth();
   const [mode, setMode] = useState("login");
   const [email, setEmail] = useState("");
@@ -10,19 +10,8 @@ export default function AuthModal({ isOpen, onClose }) {
   const [displayName, setDisplayName] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const inputRef = useRef(null);
-
-  useEffect(() => {
-    if (isOpen) {
-      setMode("login");
-      setEmail("");
-      setPassword("");
-      setDisplayName("");
-      setError("");
-      setSuccess("");
-      setTimeout(() => inputRef.current?.focus(), 100);
-    }
-  }, [isOpen]);
 
   function reset() {
     setEmail("");
@@ -46,6 +35,7 @@ export default function AuthModal({ isOpen, onClose }) {
       return;
     }
 
+    setSubmitting(true);
     try {
       if (mode === "login") {
         await login(email.trim(), password);
@@ -58,10 +48,10 @@ export default function AuthModal({ isOpen, onClose }) {
       }
     } catch (err) {
       setError(err.message);
+    } finally {
+      setSubmitting(false);
     }
   }
-
-  if (!isOpen) return null;
 
   return (
     <div className="auth-overlay" onClick={onClose}>
@@ -132,8 +122,8 @@ export default function AuthModal({ isOpen, onClose }) {
           {error && <div className="auth-error">{error}</div>}
           {success && <div className="auth-success">{success}</div>}
 
-          <button type="submit" className="btn-primary auth-submit">
-            {mode === "login" ? "Login" : "Create Account"}
+          <button type="submit" className="btn-primary auth-submit" disabled={submitting}>
+            {submitting ? (mode === "login" ? "Logging in..." : "Creating...") : (mode === "login" ? "Login" : "Create Account")}
           </button>
         </form>
 

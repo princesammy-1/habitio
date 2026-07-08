@@ -27,7 +27,7 @@ export default function Header() {
         </div>
         <p className="date-label">{formatDateLabel(today())}</p>
       </header>
-      <AuthModal isOpen={authOpen} onClose={() => setAuthOpen(false)} />
+      {authOpen && <AuthModal onClose={() => setAuthOpen(false)} />}
     </>
   );
 }

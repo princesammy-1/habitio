@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { pastDays, getMonthName } from '../utils/helpers';
+import { pastDays, getMonthName, isExpectedDay } from '../utils/helpers';
 
 export default function ContributionGrid({ habits }) {
   const [collapsed, setCollapsed] = useState(true);
@@ -7,13 +7,15 @@ export default function ContributionGrid({ habits }) {
 
   function getDayIntensity(dayStr) {
     let done = 0;
-    let total = 0;
+    let expected = 0;
     habits.filter(h => !h.archived).forEach(h => {
-      total++;
-      if (h.logs?.[dayStr] === 'done') done++;
+      if (isExpectedDay(h.cadence, dayStr)) {
+        expected++;
+        if (h.logs?.[dayStr] === 'done') done++;
+      }
     });
-    if (total === 0 || done === 0) return 0;
-    const ratio = done / total;
+    if (expected === 0 || done === 0) return 0;
+    const ratio = done / expected;
     if (ratio >= 0.75) return 4;
     if (ratio >= 0.5) return 3;
     if (ratio >= 0.25) return 2;
