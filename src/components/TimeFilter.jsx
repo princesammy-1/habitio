@@ -10,59 +10,26 @@ const SLOT_LABELS = {
 export default function TimeFilter({ value, onChange }) {
   const filters = [
     { value: "all", label: "All" },
-    {
-      value: "dawn",
-      label: (
-        <>
-          <FiSunrise /> {SLOT_LABELS.dawn}
-        </>
-      ),
-    },
-    {
-      value: "morning",
-      label: (
-        <>
-          <FiSunrise /> {SLOT_LABELS.morning}
-        </>
-      ),
-    },
-    {
-      value: "afternoon",
-      label: (
-        <>
-          <FiSun /> {SLOT_LABELS.afternoon}
-        </>
-      ),
-    },
-    {
-      value: "evening",
-      label: (
-        <>
-          <FiMoon /> {SLOT_LABELS.evening}
-        </>
-      ),
-    },
-    {
-      value: "archived",
-      label: (
-        <>
-          <FiArchive /> Archived
-        </>
-      ),
-    },
+    { value: "dawn", label: `Dawn ${SLOT_LABELS.dawn}` },
+    { value: "morning", label: `Morning ${SLOT_LABELS.morning}` },
+    { value: "afternoon", label: `Afternoon ${SLOT_LABELS.afternoon}` },
+    { value: "evening", label: `Evening ${SLOT_LABELS.evening}` },
+    { value: "archived", label: "Archived" },
   ];
 
   return (
     <div className="time-filter">
-      {filters.map((f) => (
-        <button
-          key={f.value}
-          className={`filter-btn ${value === f.value ? "active" : ""}`}
-          onClick={() => onChange(f.value)}
-        >
-          {f.label}
-        </button>
-      ))}
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="time-filter-select"
+      >
+        {filters.map((f) => (
+          <option key={f.value} value={f.value}>
+            {f.label}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }
