@@ -490,11 +490,12 @@ header h1 {
 .badge.earned .badge-icon { color: var(--text-success); }
 .badge.earned .badge-label { color: var(--text-success); }
 .badge.locked {
-  color: rgba(255, 255, 255, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--badge-locked-text);
+  border: 1px solid var(--badge-locked-border);
   background: transparent; box-shadow: none;
 }
-.badge.locked:hover { border-color: rgba(255, 255, 255, 0.12); color: rgba(255, 255, 255, 0.5); }
+.badge.locked:hover { border-color: var(--badge-locked-hover-border); color: var(--badge-locked-hover-text); }
+.badge.locked .badge-label { color: inherit; }
 .badge-icon { font-size: 1.3rem; }
 .badge-label { font-size: 0.6rem; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.05em; }
 

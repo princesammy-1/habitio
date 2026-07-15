@@ -64,6 +64,11 @@
   --glow-warning: 0 0 20px rgba(251, 191, 36, 0.2);
   --glow-accent: 0 0 20px rgba(129, 140, 248, 0.22);
   --glow-danger: 0 0 20px rgba(248, 113, 113, 0.2);
+
+  --badge-locked-text: rgba(255, 255, 255, 0.3);
+  --badge-locked-border: rgba(255, 255, 255, 0.05);
+  --badge-locked-hover-text: rgba(255, 255, 255, 0.5);
+  --badge-locked-hover-border: rgba(255, 255, 255, 0.12);
 }
 
 [data-theme='light'] {
@@ -125,6 +130,11 @@
   --glow-warning: 0 0 20px rgba(217, 119, 6, 0.15);
   --glow-accent: 0 0 20px rgba(99, 102, 241, 0.18);
   --glow-danger: 0 0 20px rgba(220, 38, 38, 0.15);
+
+  --badge-locked-text: #a1a1aa;
+  --badge-locked-border: #e4e4e7;
+  --badge-locked-hover-text: #71717a;
+  --badge-locked-hover-border: #d4d4d8;
 }
 
 body {
