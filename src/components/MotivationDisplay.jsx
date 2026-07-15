@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FiRefreshCw } from "react-icons/fi";
-import { calcCurrentStreak, calcRollingConsistency } from "../utils/helpers";
+import { calcCurrentStreak, calcRollingConsistency, getSlotLabel } from "../utils/helpers";
 
 function currentTimeSlot() {
   const h = new Date().getHours();
@@ -10,19 +10,11 @@ function currentTimeSlot() {
   return "evening";
 }
 
-const SLOT_LABELS = {
-  dawn: "00:00-05:59",
-  morning: "06:00-11:59",
-  afternoon: "12:00-17:59",
-  evening: "18:00-23:59",
-};
+const SLOT_IDS = ["dawn", "morning", "afternoon", "evening"];
 
 const TIME_OPTIONS = [
   { value: "any", label: "Any" },
-  { value: "dawn", label: SLOT_LABELS.dawn },
-  { value: "morning", label: SLOT_LABELS.morning },
-  { value: "afternoon", label: SLOT_LABELS.afternoon },
-  { value: "evening", label: SLOT_LABELS.evening },
+  ...SLOT_IDS.map(id => ({ value: id, label: getSlotLabel(id) })),
 ];
 
 const MESSAGES = [

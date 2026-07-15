@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { FiSunrise, FiSun, FiMoon } from "react-icons/fi";
-import { today, calcRollingConsistency } from "../utils/helpers";
+import { today, calcRollingConsistency, getSlotFromExact, SLOT_RANGES } from "../utils/helpers";
 
-const SLOT_LABELS = {
-  dawn: "00:00-05:59",
-  morning: "06:00-11:59",
-  afternoon: "12:00-17:59",
-  evening: "18:00-23:59",
+const SlotIcon = ({ slot }) => {
+  if (slot === "afternoon") return <FiSun />;
+  if (slot === "evening") return <FiMoon />;
+  return <FiSunrise />;
 };
 
 export default function TimeAnalytics({ habits }) {
@@ -15,35 +14,17 @@ export default function TimeAnalytics({ habits }) {
   const active = habits.filter((h) => !h.archived);
   const todayStr = today();
 
-  const groups = { dawn: [], morning: [], afternoon: [], evening: [], any: [] };
+  const groups = { dawn: [], morning: [], afternoon: [], evening: [] };
   active.forEach((h) => {
-    const key = h.timeOfDay || "any";
-    if (groups[key]) groups[key].push(h);
+    if (!h.timeOfDay) return;
+    const slot = getSlotFromExact(h.timeOfDay);
+    if (slot && groups[slot]) groups[slot].push(h);
   });
 
   const timeSlots = ["dawn", "morning", "afternoon", "evening"];
-  const labels = {
-    dawn: (
-      <>
-        <FiSunrise /> {SLOT_LABELS.dawn}
-      </>
-    ),
-    morning: (
-      <>
-        <FiSunrise /> {SLOT_LABELS.morning}
-      </>
-    ),
-    afternoon: (
-      <>
-        <FiSun /> {SLOT_LABELS.afternoon}
-      </>
-    ),
-    evening: (
-      <>
-        <FiMoon /> {SLOT_LABELS.evening}
-      </>
-    ),
-  };
+  const slotLabel = { dawn: "Dawn", morning: "Morning", afternoon: "Afternoon", evening: "Evening" };
+  const slotRange = {};
+  SLOT_RANGES.forEach(s => { slotRange[s.id] = `${String(s.start).padStart(2, "0")}:00-${String(s.end).padStart(2, "0")}:59`; });
 
   const stats = timeSlots.map((slot) => {
     const habitsInSlot = groups[slot];
@@ -76,7 +57,7 @@ export default function TimeAnalytics({ habits }) {
             .filter((s) => s.total > 0)
             .map((s) => (
               <div key={s.slot} className="analytics-card">
-                <div className="analytics-header">{labels[s.slot]}</div>
+                <div className="analytics-header"><SlotIcon slot={s.slot} /> {slotLabel[s.slot]} {slotRange[s.slot]}</div>
                 <div className="analytics-stat">
                   <span className="analytics-value">{s.rate}%</span>
                   <span className="analytics-label">today</span>

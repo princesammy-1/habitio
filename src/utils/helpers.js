@@ -128,10 +128,40 @@ export function getTodayStatus(habit) {
   return habit.logs[key];
 }
 
-export function getTimeOfDayLabel(tod) {
-  const labels = { morning: 'Morning', afternoon: 'Afternoon', evening: 'Evening' };
-  return labels[tod] || 'Any Time';
+const SLOT_RANGES = [
+  { id: "dawn",     label: "Dawn",      start: 0,  end: 5   },
+  { id: "morning",  label: "Morning",   start: 6,  end: 11  },
+  { id: "afternoon",label: "Afternoon", start: 12, end: 17  },
+  { id: "evening",  label: "Evening",   start: 18, end: 23  },
+];
+
+const EXACT_TIMES = [];
+for (const slot of SLOT_RANGES) {
+  for (let h = slot.start; h <= slot.end; h++) {
+    EXACT_TIMES.push({ value: `${String(h).padStart(2, "0")}:00`, slot: slot.id });
+    EXACT_TIMES.push({ value: `${String(h).padStart(2, "0")}:30`, slot: slot.id });
+  }
 }
+
+function formatExactTime(timeStr) {
+  if (!timeStr) return null;
+  const [h, m] = timeStr.split(":").map(Number);
+  const ampm = h >= 12 ? "PM" : "AM";
+  const hour = h % 12 || 12;
+  return `${hour}:${String(m).padStart(2, "0")} ${ampm}`;
+}
+
+function getSlotFromExact(timeStr) {
+  if (!timeStr) return null;
+  const h = parseInt(timeStr.split(":")[0], 10);
+  return SLOT_RANGES.find(s => h >= s.start && h <= s.end)?.id || null;
+}
+
+function getSlotLabel(slotId) {
+  return SLOT_RANGES.find(s => s.id === slotId)?.label || slotId;
+}
+
+export { EXACT_TIMES, SLOT_RANGES, formatExactTime, getSlotFromExact, getSlotLabel };
 
 export function getCadenceLabel(cadence) {
   if (!cadence) return 'Daily';

@@ -1,7 +1,16 @@
 import { useState, useRef, useEffect } from "react";
 import { FiPlus, FiCheck, FiX } from "react-icons/fi";
+import { EXACT_TIMES, formatExactTime, getSlotLabel } from "../utils/helpers";
 
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+const SLOT_ORDER = ["dawn", "morning", "afternoon", "evening"];
+
+const grouped = SLOT_ORDER.map(slotId => ({
+  slotId,
+  label: getSlotLabel(slotId),
+  times: EXACT_TIMES.filter(t => t.slot === slotId),
+}));
 
 export default function AddHabitForm({ onAdd }) {
   const [expanded, setExpanded] = useState(false);
@@ -9,7 +18,7 @@ export default function AddHabitForm({ onAdd }) {
   const [cadence, setCadence] = useState("daily");
   const [timesPerWeek, setTimesPerWeek] = useState(3);
   const [customDays, setCustomDays] = useState([]);
-  const [timeOfDay, setTimeOfDay] = useState("any");
+  const [timeOfDay, setTimeOfDay] = useState("");
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -25,10 +34,11 @@ export default function AddHabitForm({ onAdd }) {
     if (cadence === "weekly") cadenceObj.timesPerWeek = timesPerWeek;
     if (cadence === "custom") cadenceObj.daysOfWeek = customDays;
 
-    onAdd(trimmed, cadenceObj, timeOfDay);
+    onAdd(trimmed, cadenceObj, timeOfDay || null);
     setName("");
     setExpanded(false);
     setCadence("daily");
+    setTimeOfDay("");
     setCustomDays([]);
   }
 
@@ -119,24 +129,22 @@ export default function AddHabitForm({ onAdd }) {
 
           <div className="form-group">
             <label>Time of day</label>
-            <div className="cadence-options">
-              {[
-                { value: "any", label: "Any" },
-                { value: "dawn", label: "00:00-05:59" },
-                { value: "morning", label: "06:00-11:59" },
-                { value: "afternoon", label: "12:00-17:59" },
-                { value: "evening", label: "18:00-23:59" },
-              ].map((t) => (
-                <button
-                  key={t.value}
-                  type="button"
-                  className={`pill ${timeOfDay === t.value ? "active" : ""}`}
-                  onClick={() => setTimeOfDay(t.value)}
-                >
-                  {t.label}
-                </button>
+            <select
+              className="time-select"
+              value={timeOfDay}
+              onChange={(e) => setTimeOfDay(e.target.value)}
+            >
+              <option value="">Any</option>
+              {grouped.map((g) => (
+                <optgroup key={g.slotId} label={g.label}>
+                  {g.times.map((t) => (
+                    <option key={t.value} value={t.value}>
+                      {formatExactTime(t.value)}
+                    </option>
+                  ))}
+                </optgroup>
               ))}
-            </div>
+            </select>
           </div>
 
           <div className="form-actions">

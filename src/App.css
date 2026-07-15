@@ -175,6 +175,14 @@ header h1 { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); }
   display: block; font-size: 0.75rem; color: var(--text-secondary);
   text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.4rem;
 }
+.time-select {
+  width: 100%; padding: 0.5rem 0.75rem; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--bg-body);
+  color: var(--text-primary); font-size: 0.85rem; cursor: pointer;
+  outline: none; transition: border 0.2s;
+}
+.time-select:hover { border-color: var(--border-hover); }
+.time-select:focus { border-color: var(--accent); }
 .cadence-options { display: flex; flex-wrap: wrap; gap: 4px; }
 
 .pill {
