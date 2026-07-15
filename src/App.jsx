@@ -1,11 +1,10 @@
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { today } from './utils/helpers';
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
 import Header from './components/Header';
 import AddHabitForm from './components/AddHabitForm';
-import TimeFilter from './components/TimeFilter';
 import StatsBar from './components/StatsBar';
 import HabitList from './components/HabitList';
 import WeekView from './components/WeekView';
@@ -41,7 +40,6 @@ function resetSkipTokensIfNeeded(habit) {
 
 function AppContent() {
   const [habits, setHabits] = useLocalStorage('habitio_data', []);
-  const [filter, setFilter] = useState('all');
 
   const addHabit = useCallback((name, cadence, timeOfDay) => {
     setHabits(prev => [...prev, createHabit(name, cadence, timeOfDay)]);
@@ -95,12 +93,9 @@ function AppContent() {
       <Header />
       <MotivationDisplay habits={visibleHabits} />
       <AddHabitForm onAdd={addHabit} />
-      <TimeFilter value={filter} onChange={setFilter} />
       <StatsBar habits={visibleHabits} />
       <HabitList
         habits={visibleHabits}
-        filter={filter}
-        showArchived={filter === 'archived'}
         onToggle={toggleHabit}
         onSkip={skipHabit}
         onDelete={deleteHabit}
