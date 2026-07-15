@@ -460,8 +460,8 @@ header h1 {
 }
 
 .cell.low { background: var(--success-bg); border-color: var(--success-border); }
-.cell.medium { background: #22c55e45; border-color: #22c55e55; }
-.cell.high { background: #22c55e70; border-color: #22c55e80; }
+.cell.medium { background: #4ade8040; border-color: #4ade8050; }
+.cell.high { background: #4ade8065; border-color: #4ade8075; }
 .cell.max { background: var(--success); border-color: var(--success); }
 
 .legend {
