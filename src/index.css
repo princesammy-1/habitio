@@ -6,34 +6,34 @@
 
 :root,
 [data-theme='dark'] {
-  --bg-body: #141417;
-  --bg-surface: #1e1e22;
-  --bg-surface-hover: #28282c;
+  --bg-body: #1b1b1f;
+  --bg-surface: #25252a;
+  --bg-surface-hover: #2f2f34;
   --bg-success: #1a2e1e;
   --bg-warning: #1e1a0e;
   --bg-danger: #1e1212;
-  --bg-accent: #818cf815;
+  --bg-accent: #818cf818;
 
-  --border: #353539;
-  --border-light: #222226;
-  --border-hover: #63636b;
+  --border: #3a3a40;
+  --border-light: #2a2a2e;
+  --border-hover: #6b6b73;
   --border-success: #4ade8030;
   --border-warning: #fbbf2430;
   --border-danger: #f8717130;
-  --border-accent: #818cf8;
+  --border-accent: #a5b4fc;
 
-  --text-primary: #f0f0f2;
-  --text-secondary: #b8b8bd;
-  --text-tertiary: #8a8a90;
-  --text-muted: #6a6a70;
-  --text-success: #4ade80;
-  --text-warning: #fbbf24;
-  --text-danger: #f87171;
-  --text-accent: #a5b4fc;
-  --text-orange: #fb923c;
+  --text-primary: #ffffff;
+  --text-secondary: #d4d4d8;
+  --text-tertiary: #a1a1aa;
+  --text-muted: #88888d;
+  --text-success: #6ee7a0;
+  --text-warning: #fcd34d;
+  --text-danger: #fca5a5;
+  --text-accent: #c7d2fe;
+  --text-orange: #fdba74;
 
-  --accent: #818cf8;
-  --accent-hover: #6366f1;
+  --accent: #a5b4fc;
+  --accent-hover: #818cf8;
   --success: #22c55e;
   --success-bg: #22c55e20;
   --success-border: #4ade8040;
@@ -41,34 +41,34 @@
   --warning-bg: #f59e0b20;
   --danger: #ef4444;
   --danger-bg: #ef444420;
-  --orange: #f97316;
+  --orange: #fb923c;
   --orange-dark: #ef4444;
 
   --badge-dawn: #22c55e20;
-  --badge-dawn-text: #4ade80;
+  --badge-dawn-text: #6ee7a0;
   --badge-morning: #f59e0b20;
-  --badge-morning-text: #fbbf24;
-  --badge-afternoon: #6366f120;
+  --badge-morning-text: #fcd34d;
+  --badge-afternoon: #818cf820;
   --badge-afternoon-text: #a5b4fc;
   --badge-evening: #8b5cf620;
-  --badge-evening-text: #a78bfa;
+  --badge-evening-text: #c4b5fd;
 
-  --overlay: rgba(0, 0, 0, 0.65);
-  --shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+  --overlay: rgba(0, 0, 0, 0.6);
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
 
-  --glass-bg: rgba(30, 30, 34, 0.88);
-  --glass-border: rgba(255, 255, 255, 0.09);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --glass-bg: rgba(37, 37, 42, 0.9);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
 
-  --glow-success: 0 0 20px rgba(74, 222, 128, 0.2);
-  --glow-warning: 0 0 20px rgba(251, 191, 36, 0.2);
-  --glow-accent: 0 0 20px rgba(129, 140, 248, 0.22);
-  --glow-danger: 0 0 20px rgba(248, 113, 113, 0.2);
+  --glow-success: 0 0 20px rgba(110, 231, 160, 0.2);
+  --glow-warning: 0 0 20px rgba(252, 211, 77, 0.2);
+  --glow-accent: 0 0 20px rgba(165, 180, 252, 0.22);
+  --glow-danger: 0 0 20px rgba(252, 165, 165, 0.2);
 
-  --badge-locked-text: rgba(255, 255, 255, 0.3);
-  --badge-locked-border: rgba(255, 255, 255, 0.05);
-  --badge-locked-hover-text: rgba(255, 255, 255, 0.5);
-  --badge-locked-hover-border: rgba(255, 255, 255, 0.12);
+  --badge-locked-text: rgba(255, 255, 255, 0.35);
+  --badge-locked-border: rgba(255, 255, 255, 0.06);
+  --badge-locked-hover-text: rgba(255, 255, 255, 0.55);
+  --badge-locked-hover-border: rgba(255, 255, 255, 0.14);
 }
 
 [data-theme='light'] {
