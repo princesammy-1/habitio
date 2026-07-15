@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiRefreshCw } from "react-icons/fi";
 import { calcCurrentStreak, calcRollingConsistency, getSlotLabel } from "../utils/helpers";
 
@@ -284,8 +284,18 @@ function pickMessage(habits, timeFilter) {
 
 export default function MotivationDisplay({ habits }) {
   const [timeFilter, setTimeFilter] = useState(() => currentTimeSlot());
-  const [msg, setMsg] = useState(() => pickMessage(habits, timeFilter));
+  const [msg, setMsg] = useState(() => pickMessage(habits, currentTimeSlot()));
   const [fadeKey, setFadeKey] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      const slot = currentTimeSlot();
+      setTimeFilter(slot);
+      setMsg(pickMessage(habits, slot));
+      setFadeKey((k) => k + 1);
+    }, 300000);
+    return () => clearInterval(id);
+  }, [habits]);
 
   function selectTime(slot) {
     setTimeFilter(slot);
