@@ -1,13 +1,28 @@
 import { FiSunrise, FiSun, FiMoon, FiArchive } from "react-icons/fi";
 
+const SLOT_LABELS = {
+  dawn: "00:00-05:59",
+  morning: "06:00-11:59",
+  afternoon: "12:00-17:59",
+  evening: "18:00-23:59",
+};
+
 export default function TimeFilter({ value, onChange }) {
   const filters = [
     { value: "all", label: "All" },
     {
+      value: "dawn",
+      label: (
+        <>
+          <FiSunrise /> {SLOT_LABELS.dawn}
+        </>
+      ),
+    },
+    {
       value: "morning",
       label: (
         <>
-          <FiSunrise /> Morning
+          <FiSunrise /> {SLOT_LABELS.morning}
         </>
       ),
     },
@@ -15,7 +30,7 @@ export default function TimeFilter({ value, onChange }) {
       value: "afternoon",
       label: (
         <>
-          <FiSun /> Afternoon
+          <FiSun /> {SLOT_LABELS.afternoon}
         </>
       ),
     },
@@ -23,7 +38,7 @@ export default function TimeFilter({ value, onChange }) {
       value: "evening",
       label: (
         <>
-          <FiMoon /> Evening
+          <FiMoon /> {SLOT_LABELS.evening}
         </>
       ),
     },

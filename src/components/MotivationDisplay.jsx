@@ -4,17 +4,25 @@ import { calcCurrentStreak, calcRollingConsistency } from "../utils/helpers";
 
 function currentTimeSlot() {
   const h = new Date().getHours();
-  if (h >= 5 && h < 12) return "morning";
-  if (h >= 12 && h < 17) return "afternoon";
-  if (h >= 17 && h < 22) return "evening";
-  return "any";
+  if (h >= 0 && h < 6) return "dawn";
+  if (h >= 6 && h < 12) return "morning";
+  if (h >= 12 && h < 18) return "afternoon";
+  return "evening";
 }
+
+const SLOT_LABELS = {
+  dawn: "00:00-05:59",
+  morning: "06:00-11:59",
+  afternoon: "12:00-17:59",
+  evening: "18:00-23:59",
+};
 
 const TIME_OPTIONS = [
   { value: "any", label: "Any" },
-  { value: "morning", label: "Morning" },
-  { value: "afternoon", label: "Afternoon" },
-  { value: "evening", label: "Evening" },
+  { value: "dawn", label: SLOT_LABELS.dawn },
+  { value: "morning", label: SLOT_LABELS.morning },
+  { value: "afternoon", label: SLOT_LABELS.afternoon },
+  { value: "evening", label: SLOT_LABELS.evening },
 ];
 
 const MESSAGES = [

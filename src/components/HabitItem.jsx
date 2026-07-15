@@ -136,7 +136,7 @@ export default function HabitItem({
           <span className="cadence-badge">{cadenceLabel}</span>
           {habit.timeOfDay && habit.timeOfDay !== "any" && (
             <span className={`tod-badge ${habit.timeOfDay}`}>
-              {habit.timeOfDay}
+              {habit.timeOfDay === "dawn" ? "00:00-05:59" : habit.timeOfDay === "morning" ? "06:00-11:59" : habit.timeOfDay === "afternoon" ? "12:00-17:59" : "18:00-23:59"}
             </span>
           )}
         </div>

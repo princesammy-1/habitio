@@ -2,33 +2,45 @@ import { useState } from "react";
 import { FiSunrise, FiSun, FiMoon } from "react-icons/fi";
 import { today, calcRollingConsistency } from "../utils/helpers";
 
+const SLOT_LABELS = {
+  dawn: "00:00-05:59",
+  morning: "06:00-11:59",
+  afternoon: "12:00-17:59",
+  evening: "18:00-23:59",
+};
+
 export default function TimeAnalytics({ habits }) {
   const [collapsed, setCollapsed] = useState(true);
 
   const active = habits.filter((h) => !h.archived);
   const todayStr = today();
 
-  const groups = { morning: [], afternoon: [], evening: [], any: [] };
+  const groups = { dawn: [], morning: [], afternoon: [], evening: [], any: [] };
   active.forEach((h) => {
     const key = h.timeOfDay || "any";
     if (groups[key]) groups[key].push(h);
   });
 
-  const timeSlots = ["morning", "afternoon", "evening"];
+  const timeSlots = ["dawn", "morning", "afternoon", "evening"];
   const labels = {
+    dawn: (
+      <>
+        <FiSunrise /> {SLOT_LABELS.dawn}
+      </>
+    ),
     morning: (
       <>
-        <FiSunrise /> Morning
+        <FiSunrise /> {SLOT_LABELS.morning}
       </>
     ),
     afternoon: (
       <>
-        <FiSun /> Afternoon
+        <FiSun /> {SLOT_LABELS.afternoon}
       </>
     ),
     evening: (
       <>
-        <FiMoon /> Evening
+        <FiMoon /> {SLOT_LABELS.evening}
       </>
     ),
   };

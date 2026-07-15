@@ -122,9 +122,10 @@ export default function AddHabitForm({ onAdd }) {
             <div className="cadence-options">
               {[
                 { value: "any", label: "Any" },
-                { value: "morning", label: "Morning" },
-                { value: "afternoon", label: "Afternoon" },
-                { value: "evening", label: "Evening" },
+                { value: "dawn", label: "00:00-05:59" },
+                { value: "morning", label: "06:00-11:59" },
+                { value: "afternoon", label: "12:00-17:59" },
+                { value: "evening", label: "18:00-23:59" },
               ].map((t) => (
                 <button
                   key={t.value}

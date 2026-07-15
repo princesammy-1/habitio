@@ -44,6 +44,8 @@
   --orange: #f97316;
   --orange-dark: #ef4444;
 
+  --badge-dawn: #22c55e20;
+  --badge-dawn-text: #4ade80;
   --badge-morning: #f59e0b20;
   --badge-morning-text: #fbbf24;
   --badge-afternoon: #6366f120;
@@ -94,6 +96,8 @@
   --orange: #ea580c;
   --orange-dark: #dc2626;
 
+  --badge-dawn: #22c55e15;
+  --badge-dawn-text: #16a34a;
   --badge-morning: #f59e0b15;
   --badge-morning-text: #d97706;
   --badge-afternoon: #6366f115;
