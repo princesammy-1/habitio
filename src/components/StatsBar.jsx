@@ -25,29 +25,29 @@ export default function StatsBar({ habits }) {
   return (
     <div className="stats-bar">
       <div className="stat">
-        <div className="value">{total}</div>
+        <div className="value"><span className="stat-dot stat-dot--neutral" />{total}</div>
         <div className="label">Habits</div>
       </div>
       <div className="stat done-stat">
-        <div className="value">{done}</div>
+        <div className="value"><span className="stat-dot stat-dot--done" />{done}</div>
         <div className="label">Done</div>
       </div>
       {skipped > 0 && (
         <div className="stat skip-stat">
-          <div className="value">{skipped}</div>
+          <div className="value"><span className="stat-dot stat-dot--skipped" />{skipped}</div>
           <div className="label">Skipped</div>
         </div>
       )}
-      <div className="stat">
-        <div className="value">{pending}</div>
+      <div className="stat pending-stat">
+        <div className="value"><span className="stat-dot stat-dot--pending" />{pending}</div>
         <div className="label">Pending</div>
       </div>
       <div className="stat">
-        <div className="value">{avgRate}%</div>
+        <div className="value"><span className="stat-dot stat-dot--neutral" />{avgRate}%</div>
         <div className="label">Avg 30d</div>
       </div>
       <div className="stat">
-        <div className="value">{totalSkipTokens - usedSkipTokens}</div>
+        <div className="value"><span className="stat-dot stat-dot--neutral" />{totalSkipTokens - usedSkipTokens}</div>
         <div className="label">Tokens Left</div>
       </div>
     </div>
