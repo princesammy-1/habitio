@@ -1,5 +1,7 @@
 import { useState, useRef, useCallback } from "react";
 import { FiOctagon, FiArchive, FiTrash2, FiZap } from "react-icons/fi";
+import { FaBan, FaTrashAlt, FaArchive } from "react-icons/fa";
+import { useTheme } from "../context/ThemeContext";
 import {
   calcCurrentStreak,
   calcLongestStreak,
@@ -30,6 +32,8 @@ export default function HabitItem({
   const consistency = calcRollingConsistency(habit);
   const skipTokensLeft = canUseSkipToken(habit);
   const cadenceLabel = getCadenceLabel(habit.cadence);
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   const handleTouchStart = useCallback((e) => {
     startX.current = e.touches[0].clientX;
@@ -110,7 +114,7 @@ export default function HabitItem({
                 onClick={onSkip}
                 title="Use skip token"
               >
-                <FiOctagon />
+                {isDark ? <FiOctagon /> : <FaBan />}
               </button>
             )}
             {!habit.archived && (
@@ -119,7 +123,7 @@ export default function HabitItem({
                 onClick={onArchive}
                 title="Archive habit"
               >
-                <FiArchive />
+                {isDark ? <FiArchive /> : <FaArchive />}
               </button>
             )}
             <button
@@ -127,7 +131,7 @@ export default function HabitItem({
               onClick={() => setConfirmDelete(!confirmDelete)}
               title="Delete habit"
             >
-              <FiTrash2 />
+              {isDark ? <FiTrash2 /> : <FaTrashAlt />}
             </button>
           </div>
         </div>
