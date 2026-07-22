@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { today } from './utils/helpers';
 import { ThemeProvider } from './context/ThemeContext';
@@ -12,6 +12,7 @@ import ContributionGrid from './components/ContributionGrid';
 import BadgeDisplay from './components/BadgeDisplay';
 import MotivationDisplay from './components/MotivationDisplay';
 import TimeAnalytics from './components/TimeAnalytics';
+import MockDashboard from './components/MockDashboard';
 import './App.css';
 
 function createHabit(name, cadence = { type: 'daily' }, timeOfDay = null) {
@@ -39,6 +40,7 @@ function resetSkipTokensIfNeeded(habit) {
 }
 
 function AppContent() {
+  const [showDesignSystem, setShowDesignSystem] = useState(false);
   const [habits, setHabits] = useLocalStorage('habitio_data', []);
 
   const addHabit = useCallback((name, cadence, timeOfDay) => {
@@ -88,9 +90,40 @@ function AppContent() {
 
   const visibleHabits = habits.map(resetSkipTokensIfNeeded);
 
+  if (showDesignSystem) {
+    return (
+      <div style={{ minHeight: '100vh', background: '#F8FAFC' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', padding: 12 }}>
+          <button
+            onClick={() => setShowDesignSystem(false)}
+            style={{
+              padding: '8px 20px', borderRadius: 100, border: '1px solid #E5E7EB',
+              background: '#fff', color: '#1F2937', fontSize: 13, fontWeight: 600,
+              cursor: 'pointer',
+            }}
+          >
+            Back to Habit Tracker
+          </button>
+        </div>
+        <MockDashboard />
+      </div>
+    );
+  }
+
   return (
     <div className="container">
       <Header />
+      <button
+        onClick={() => setShowDesignSystem(true)}
+        style={{
+          marginBottom: 12,
+          padding: '8px 20px', borderRadius: 100, border: '1px solid var(--border)',
+          background: 'var(--bg-surface)', color: 'var(--text-secondary)',
+          fontSize: 13, fontWeight: 600, cursor: 'pointer', width: '100%', textAlign: 'center',
+        }}
+      >
+        View Design System Mockup
+      </button>
       <MotivationDisplay habits={visibleHabits} />
       <AddHabitForm onAdd={addHabit} />
       <StatsBar habits={visibleHabits} />
