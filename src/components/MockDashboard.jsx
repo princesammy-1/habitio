@@ -6,24 +6,11 @@ import FloatingPillNav from './FloatingPillNav'
 
 export default function MockDashboard() {
   return (
-    <div style={{
-      maxWidth: 420,
-      margin: '0 auto',
-      position: 'relative',
-      background: '#F8FAFC',
-      minHeight: '100vh',
-      paddingBottom: 100,
-      borderRadius: 32,
-      overflow: 'hidden',
-    }}>
+    <div className="app-viewport">
       <DashboardHeader name="Sarah" streak={12} avatar="S" />
-
-      <div style={{ paddingBottom: 24 }}>
-        <HeroFeatureCard completed={5} total={9} progress={72} />
-        <MetricsGrid />
-        <HabitListView />
-      </div>
-
+      <HeroFeatureCard completed={5} total={9} progress={72} />
+      <MetricsGrid />
+      <HabitListView />
       <FloatingPillNav />
     </div>
   )

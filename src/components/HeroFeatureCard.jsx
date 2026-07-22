@@ -8,33 +8,20 @@ export default function HeroFeatureCard({
   const pct = total > 0 ? Math.round((completed / total) * 100) : 0
 
   return (
-    <div style={{
-      background: '#fff',
-      borderRadius: 24,
-      padding: '20px 24px',
-      marginTop: -40,
-      marginLeft: 20,
-      marginRight: 20,
-      boxShadow: '0 8px 32px rgba(139,92,246,0.08)',
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      position: 'relative',
-      zIndex: 10,
-    }}>
+    <div className="card hero-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       <div>
-        <p style={{ fontSize: 13, color: '#6B7280', fontWeight: 500, margin: '0 0 4px' }}>
+        <p style={{ fontSize: 13, color: 'var(--text-muted)', fontWeight: 500, margin: '0 0 4px' }}>
           Today's Progress
         </p>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
-          <span style={{ fontSize: 36, fontWeight: 800, color: '#1F2937', lineHeight: 1 }}>
+          <span style={{ fontSize: 36, fontWeight: 800, color: 'var(--text-main)', lineHeight: 1 }}>
             {completed}
           </span>
           <span style={{ fontSize: 16, color: '#9CA3AF', fontWeight: 600 }}>
             / {total}
           </span>
         </div>
-        <p style={{ fontSize: 13, color: '#10B981', fontWeight: 600, marginTop: 4 }}>
+        <p style={{ fontSize: 13, color: 'var(--accent-green)', fontWeight: 600, marginTop: 4 }}>
           {pct}% completed
         </p>
       </div>
@@ -61,10 +48,10 @@ export default function HeroFeatureCard({
           </defs>
         </svg>
         <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: 24, fontWeight: 800, color: '#1F2937', lineHeight: 1.2 }}>
+          <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--text-main)', lineHeight: 1.2 }}>
             {progress}%
           </div>
-          <div style={{ fontSize: 11, color: '#6B7280', fontWeight: 500 }}>overall</div>
+          <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500 }}>overall</div>
         </div>
       </div>
     </div>

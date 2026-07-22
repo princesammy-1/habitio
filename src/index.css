@@ -1,10 +1,59 @@
-*, *::before, *::after {
+/* index.css - Design Tokens, Reset & Typography */
+
+:root {
+  /* Colors */
+  --bg-app: #F5F5FA;
+  --bg-card: #FFFFFF;
+  --header-gradient: linear-gradient(180deg, #6366F1 0%, #8B5CF6 50%, #C4B5FD 100%);
+  --nav-bg: #1C1C24;
+
+  /* Text */
+  --text-main: #1F2937;
+  --text-muted: #6B7280;
+  --text-light: #FFFFFF;
+
+  /* Accents */
+  --accent-red: #FF3B5C;
+  --accent-orange: #F97316;
+  --accent-green: #10B981;
+  --accent-blue: #3B82F6;
+
+  /* Shadows & Radius */
+  --radius-card: 24px;
+  --radius-pill: 9999px;
+  --shadow-card: 0 10px 25px -5px rgba(139, 92, 246, 0.08);
+  --shadow-nav: 0 20px 35px -5px rgba(0, 0, 0, 0.35);
+}
+
+/* CSS Reset */
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-:root,
+body {
+  background-color: #18181B;
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Legacy body styles when theme is active */
+html[data-theme='dark'] body,
+html[data-theme='light'] body {
+  background: var(--bg-body);
+  color: var(--text-primary);
+  padding: 2rem 1rem;
+  align-items: flex-start;
+}
+
+/* ===== Legacy Theme Variables (for existing habit tracker) ===== */
+
 [data-theme='dark'] {
   --bg-body: #1b1b1f;
   --bg-surface: #25252a;
@@ -25,10 +74,6 @@
   --text-primary: #ffffff;
   --text-secondary: #d4d4d8;
   --text-tertiary: #a1a1aa;
-  --text-muted: #88888d;
-  --text-success: #6ee7a0;
-  --text-warning: #fcd34d;
-  --text-danger: #fca5a5;
   --text-accent: #c7d2fe;
   --text-orange: #fdba74;
 
@@ -91,10 +136,6 @@
   --text-primary: #18181b;
   --text-secondary: #3f3f46;
   --text-tertiary: #52525b;
-  --text-muted: #71717a;
-  --text-success: #16a34a;
-  --text-warning: #d97706;
-  --text-danger: #dc2626;
   --text-accent: #4f46e5;
   --text-orange: #ea580c;
 
@@ -137,13 +178,4 @@
   --badge-locked-hover-border: #d4d4d8;
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: var(--bg-body);
-  color: var(--text-primary);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  padding: 2rem 1rem;
-  transition: background 0.3s ease, color 0.3s ease;
-}
+

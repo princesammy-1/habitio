@@ -9,64 +9,36 @@ const habits = [
 
 export default function HabitListView() {
   return (
-    <div style={{ padding: '0 20px', marginTop: 20 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-        <h2 style={{ fontSize: 18, fontWeight: 700, color: '#1F2937', margin: 0 }}>Today's Habits</h2>
-        <button style={{
-          background: 'none', border: 'none', color: '#3B82F6', fontSize: 13, fontWeight: 600, cursor: 'pointer',
-        }}>See All</button>
+    <div className="habit-list-section">
+      <div className="habit-list-header">
+        <h2>Today's Habits</h2>
+        <button>See All</button>
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         {habits.map((h, i) => (
-          <div
-            key={i}
-            style={{
-              background: '#fff',
-              borderRadius: 20,
-              padding: '14px 16px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 14,
-              boxShadow: '0 4px 16px rgba(0,0,0,0.04)',
-            }}
-          >
-            <div style={{
-              width: 44,
-              height: 44,
-              borderRadius: 12,
-              background: h.bg,
-              color: h.color,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-            }}>
+          <div key={i} className="habit-row">
+            <div className="habit-row-icon" style={{ background: h.bg, color: h.color }}>
               {h.icon}
             </div>
 
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-                <span style={{ fontSize: 14, fontWeight: 600, color: '#1F2937' }}>{h.name}</span>
-                <span style={{ fontSize: 12, color: '#6B7280', fontWeight: 500 }}>{h.target}</span>
+            <div className="habit-row-body">
+              <div className="habit-row-top">
+                <span className="habit-row-name">{h.name}</span>
+                <span className="habit-row-target">{h.target}</span>
               </div>
-              <div style={{
-                height: 6,
-                background: '#F3F4F6',
-                borderRadius: 100,
-                overflow: 'hidden',
-              }}>
-                <div style={{
-                  height: '100%',
-                  width: `${h.progress}%`,
-                  background: `linear-gradient(90deg, ${h.color}, ${h.color}dd)`,
-                  borderRadius: 100,
-                  transition: 'width 0.6s ease',
-                }} />
+              <div className="habit-row-progress">
+                <div
+                  className="habit-row-fill"
+                  style={{
+                    width: `${h.progress}%`,
+                    background: `linear-gradient(90deg, ${h.color}, ${h.color}dd)`,
+                  }}
+                />
               </div>
             </div>
 
-            <FiChevronRight size={18} color="#9CA3AF" style={{ flexShrink: 0 }} />
+            <FiChevronRight size={18} className="habit-row-arrow" />
           </div>
         ))}
       </div>

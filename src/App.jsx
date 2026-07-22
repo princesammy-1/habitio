@@ -92,7 +92,7 @@ function AppContent() {
 
   if (showDesignSystem) {
     return (
-      <div style={{ minHeight: '100vh', background: '#F8FAFC' }}>
+      <div style={{ minHeight: '100vh' }}>
         <div style={{ display: 'flex', justifyContent: 'center', padding: 12 }}>
           <button
             onClick={() => setShowDesignSystem(false)}
@@ -102,7 +102,7 @@ function AppContent() {
               cursor: 'pointer',
             }}
           >
-            Back to Habit Tracker
+            ← Back to Habit Tracker
           </button>
         </div>
         <MockDashboard />
